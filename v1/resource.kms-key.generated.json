@@ -1,0 +1,177 @@
+{
+  "Version": "2012-10-17",
+  "Id": "LeastPrivilegeKeyPolicy",
+  "Statement": [
+    {
+      "Sid": "AllowRestrictedAdministerResource",
+      "Effect": "Allow",
+      "Action": [
+        "kms:CancelKeyDeletion",
+        "kms:ConnectCustomKeyStore",
+        "kms:CreateAlias",
+        "kms:CreateCustomKeyStore",
+        "kms:CreateGrant",
+        "kms:CreateKey",
+        "kms:DeleteAlias",
+        "kms:DisableKey",
+        "kms:DisableKeyRotation",
+        "kms:DisconnectCustomKeyStore",
+        "kms:EnableKey",
+        "kms:EnableKeyRotation",
+        "kms:PutKeyPolicy",
+        "kms:RetireGrant",
+        "kms:RevokeGrant",
+        "kms:ScheduleKeyDeletion",
+        "kms:TagResource",
+        "kms:UntagResource",
+        "kms:UpdateAlias",
+        "kms:UpdateCustomKeyStore",
+        "kms:UpdateKeyDescription"
+      ],
+      "Resource": "*",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Condition": {
+        "ArnEquals": {
+          "aws:PrincipalArn": [
+            "arn:aws:iam::12345678910:user/person1",
+            "arn:aws:iam::12345678910:user/ci"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "AllowRestrictedReadConfig",
+      "Effect": "Allow",
+      "Action": [
+        "kms:DescribeCustomKeyStores",
+        "kms:DescribeKey",
+        "kms:GetKeyPolicy",
+        "kms:GetKeyRotationStatus",
+        "kms:GetParametersForImport",
+        "kms:GetPublicKey",
+        "kms:ListAliases",
+        "kms:ListGrants",
+        "kms:ListKeyPolicies",
+        "kms:ListKeys",
+        "kms:ListResourceTags",
+        "kms:ListRetirableGrants"
+      ],
+      "Resource": "*",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Condition": {
+        "ArnEquals": {
+          "aws:PrincipalArn": [
+            "arn:aws:iam::12345678910:user/person1",
+            "arn:aws:iam::12345678910:user/ci"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "AllowRestrictedReadData",
+      "Effect": "Allow",
+      "Action": [
+        "kms:Decrypt",
+        "kms:Verify"
+      ],
+      "Resource": "*",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Condition": {
+        "ArnEquals": {
+          "aws:PrincipalArn": [
+            "arn:aws:iam::12345678910:user/person1",
+            "arn:aws:iam::12345678910:role/appA"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "AllowRestrictedWriteData",
+      "Effect": "Allow",
+      "Action": [
+        "kms:Encrypt",
+        "kms:GenerateDataKey",
+        "kms:GenerateDataKeyPair",
+        "kms:GenerateDataKeyPairWithoutPlaintext",
+        "kms:GenerateDataKeyWithoutPlaintext",
+        "kms:GenerateRandom",
+        "kms:ImportKeyMaterial",
+        "kms:ReEncryptFrom",
+        "kms:ReEncryptTo",
+        "kms:Sign"
+      ],
+      "Resource": "*",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Condition": {
+        "ArnEquals": {
+          "aws:PrincipalArn": [
+            "arn:aws:iam::12345678910:user/person1",
+            "arn:aws:iam::12345678910:role/appA"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "AllowRestrictedDeleteData",
+      "Effect": "Allow",
+      "Action": [
+        "kms:DeleteCustomKeyStore",
+        "kms:DeleteImportedKeyMaterial"
+      ],
+      "Resource": "*",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Condition": {
+        "ArnEquals": {
+          "aws:PrincipalArn": []
+        }
+      }
+    },
+    {
+      "Sid": "AllowRestrictedCustomActions",
+      "Effect": "Allow",
+      "Action": "kms:DescribeKey",
+      "Resource": "*",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Condition": {
+        "ArnEquals": {
+          "aws:PrincipalArn": []
+        }
+      }
+    },
+    {
+      "Sid": "DenyEveryoneElse",
+      "Effect": "Deny",
+      "Action": "kms:*",
+      "Resource": "*",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Condition": {
+        "ArnNotEquals": {
+          "aws:PrincipalArn": [
+            "arn:aws:iam::12345678910:user/person1",
+            "arn:aws:iam::12345678910:user/ci",
+            "arn:aws:iam::12345678910:role/appA"
+          ]
+        },
+        "Bool": {
+          "aws:PrincipalIsAWSService": [
+            "false"
+          ]
+        }
+      }
+    }
+  ]
+}
