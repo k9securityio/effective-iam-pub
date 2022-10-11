@@ -1,0 +1,32 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid" : "ProtectCloudTrail",
+      "Effect": "Deny",
+      "Action": "cloudtrail:StopLogging",
+      "Resource": "*"
+    },
+    {
+      "Sid" : "ProtectConfig",
+      "Effect": "Deny",
+      "Action": [
+        "config:DeleteConfigRule",
+        "config:DeleteConfigurationRecorder",
+        "config:DeleteDeliveryChannel",
+        "config:StopConfigurationRecorder"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "DenyLeaveOrganization",
+      "Effect": "Deny",
+      "Action": [
+        "organizations:LeaveOrganization"
+      ],
+      "Resource": [
+        "*"
+      ]
+    }
+  ]
+}

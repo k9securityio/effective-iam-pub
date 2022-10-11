@@ -1,0 +1,29 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ProtectRDSData",
+      "Effect": "Deny",
+      "Action": [
+        "rds:DeleteDBCluster",
+        "rds:DeleteDBClusterSnapshot",
+        "rds:DeleteDBInstance",
+        "rds:DeleteDBInstanceAutomatedBackup",
+        "rds:DeleteDBSnapshot",
+        "rds:DeleteGlobalCluster",
+        "rds:DeleteOptionGroup"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "ProtectDynamoDBData",
+      "Effect": "Deny",
+      "Action": [
+        "dynamodb:DeleteBackup",
+        "dynamodb:DeleteTable",
+        "dynamodb:DeleteTableReplica"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

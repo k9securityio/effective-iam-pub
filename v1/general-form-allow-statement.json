@@ -1,0 +1,24 @@
+{
+  "Sid": "Allow<CapabilityName>",
+  "Effect": "Allow",
+  "Action": [
+    "s3:<CapabilityAction1>",
+    "s3:<CapabilityAction2>",
+    "s3:<CapabilityAction...N>"
+  ],
+  "Resource": [
+    "arn:aws:s3:::sensitive-app-data/*",
+    "arn:aws:s3:::sensitive-app-data"
+  ],
+  "Principal": {
+    "AWS": "*"
+  },
+  "Condition": {
+    "ArnEquals": {
+      "aws:PrincipalArn": [
+        "arn:aws:iam::111:<Identity1>",
+        "arn:aws:iam::111:<Identity2>"
+      ]
+    }
+  }
+}
